@@ -1,21 +1,33 @@
-variable "resource_group_name" {
-  description = "A container that holds related resources for an Azure solution"
-  default     = "demo-rg"
+variable "project" {
+  description = "Subnet name"
+  default     = "demo"
 }
+
 
 variable "location" {
   description = "The location/region to keep all your network resources. To get the list of all locations with table format from azure cli, run 'az account list-locations -o table'"
   default     = "South India"
 }
 
-variable "vn_name" {
+
+variable "subnet_name" {
+  description = "Subnet name"
+  default     = "subnet_1"
+}
+
+variable "subnet_addr_space" {
   description = "Virtual Network name"
-  default     = "demo-network"
+  default     = ["10.123.1.0/24"]
 }
 
 variable "address_space" {
   description = "Virtual Network name"
   default     = ["10.123.0.0/16"]
+}
+
+variable "sg_name" {
+  description = "Subnet name"
+  default     = "demo-sg"
 }
 
 variable "tags" {
