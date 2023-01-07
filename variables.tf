@@ -1,6 +1,6 @@
 variable "resource_group_name" {
   description = "A container that holds related resources for an Azure solution"
-  default     = ""
+  default     = "demo-rg"
 }
 
 variable "location" {
@@ -8,25 +8,14 @@ variable "location" {
   default     = "South India"
 }
 
-variable "virtual_network_name" {
-  description = "The name of the virtual network"
-  default     = ""
+variable "vn_name" {
+  description = "Virtual Network name"
+  default     = "demo-network"
 }
 
-variable "subnet_name" {
-  description = "The name of the subnet to use in VM scale set"
-  default     = ""
-}
-
-variable "pip_name" {
-  description = "The name of the public ip"
-  default     = ""
-}
-
-
-variable "virtual_machine_name" {
-  description = "The name of the virtual machine."
-  default     = ""
+variable "address_space" {
+  description = "Virtual Network name"
+  default     = ["10.123.0.0/16"]
 }
 
 variable "tags" {
@@ -34,7 +23,8 @@ variable "tags" {
   description = "A map of the tags to use on the resources that are deployed with this module."
 
   default = {
-    environment = "test"
-    owner       = "sumit"
+    source = "terraform"
+    env    = "test"
+    owner  = "sumit"
   }
 }

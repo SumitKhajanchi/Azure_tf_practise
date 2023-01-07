@@ -1,34 +1,20 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.91.0"
-    }
-  }
-}
-
-
 provider "azurerm" {
   features {}
 }
 
 resource "azurerm_resource_group" "demo-rg" {
-  name     = "demo-resources"
-  location = "South India"
-  tags = {
-    environment = "dev"
-  }
+  name     = var.resource_group_name
+  location = var.location
+  tags     = var.tags
 }
 
 resource "azurerm_virtual_network" "demo-vn" {
-  name                = "demo-network"
+  name                = var.vn_name
   location            = azurerm_resource_group.demo-rg.location
   resource_group_name = azurerm_resource_group.demo-rg.name
-  address_space       = ["10.123.0.0/16"]
+  address_space       = var.address_space
 
-  tags = {
-    environment = "dev"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_subnet" "demo-subnet" {
@@ -44,9 +30,7 @@ resource "azurerm_network_security_group" "demo-sg" {
   location            = azurerm_resource_group.demo-rg.location
   resource_group_name = azurerm_resource_group.demo-rg.name
 
-  tags = {
-    environment = "dev"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_network_security_rule" "demo-dev-rule" {
@@ -78,9 +62,7 @@ resource "azurerm_public_ip" "demo-ip" {
   location            = azurerm_resource_group.demo-rg.location
   allocation_method   = "Dynamic"
 
-  tags = {
-    environment = "dev"
-  }
+  tags = var.tags
 }
 
 # We dont get ip after its creation, But once we deploy other resources we can then extract 
@@ -98,9 +80,7 @@ resource "azurerm_network_interface" "demo-nic" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.demo-ip.id
   }
-  tags = {
-    environment = "dev"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_linux_virtual_machine" "demo-vm" {
